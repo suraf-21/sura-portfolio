@@ -10,17 +10,25 @@ const projectSchema = new mongoose.Schema({
   description: {
     type: String,
     required: [true, 'Project description is required'],
-    maxlength: [1000, 'Description cannot be more than 1000 characters']
+    maxlength: [2000, 'Description cannot be more than 2000 characters']
   },
   technologies: [{
     type: String,
     required: true,
     trim: true
   }],
-  imageUrl: {
+  image: {
     type: String,
-    required: [true, 'Project image URL is required'],
-    match: [/^https?:\/\/.+\..+/, 'Please enter a valid URL']
+    required: [true, 'Project image is required']
+  },
+  imagePublicId: {
+    type: String
+  },
+  video: {
+    type: String
+  },
+  videoPublicId: {
+    type: String
   },
   githubUrl: {
     type: String,
@@ -33,8 +41,8 @@ const projectSchema = new mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['web', 'mobile', 'fullstack', 'other'],
-    default: 'web'
+    enum: ['frontend', 'fullstack', 'ai-powered', 'automation', 'other'],
+    default: 'frontend'
   },
   featured: {
     type: Boolean,

@@ -89,7 +89,7 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li className="text-gray-600 dark:text-gray-400">
-               contact@surafeldev.com
+               contact@sura21dev.com
               </li>
               <li className="text-gray-600 dark:text-gray-400">
                 +251 93 481 0156

@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiDownload, FiGithub, FiLinkedin, FiTwitter, FiArrowRight, FiCode, FiLayers, FiUsers, FiBriefcase, FiBook,FiMessageSquare  } from 'react-icons/fi';
+import { FiDownload, FiGithub, FiLinkedin, FiTwitter, FiArrowRight, FiCode, FiLayers, FiUsers, FiBriefcase, FiBook,  } from 'react-icons/fi';
 
 const Home = () => {
   // ========== HERO SECTION DATA ==========
@@ -125,7 +125,7 @@ const Home = () => {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="/resume.pdf"
+            href="/surafel-cv.pdf"
             download
             className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
           >

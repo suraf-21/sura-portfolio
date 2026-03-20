@@ -18,8 +18,16 @@ const blogSchema = new mongoose.Schema({
   },
   coverImage: {
     type: String,
-    required: [true, 'Cover image URL is required'],
-    match: [/^https?:\/\/.+\..+/, 'Please enter a valid URL']
+    required: [true, 'Cover image is required']
+  },
+  coverImagePublicId: {
+    type: String
+  },
+  video: {
+    type: String
+  },
+  videoPublicId: {
+    type: String
   },
   slug: {
     type: String,

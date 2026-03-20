@@ -1,18 +1,40 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FiLayout, FiFolder, FiFileText, FiLogOut, FiHome } from 'react-icons/fi';
+import { 
+  FiLayout, FiFolder, FiFileText, FiMail, FiLogOut, FiHome,
+  FiHelpCircle // Add this icon
+} from 'react-icons/fi';
+import api from '../../services/api';
 import toast from 'react-hot-toast';
 
 const AdminSidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { logout } = useAuth();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    fetchUnreadCount();
+  }, []);
+
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await api.get('/messages/stats');
+      if (response.data && response.data.data) {
+        setUnreadCount(response.data.data.unread || 0);
+      }
+    } catch (error) {
+      console.error('Error fetching unread count:', error);
+    }
+  };
 
   const menuItems = [
     { path: '/admin/dashboard', icon: <FiLayout />, label: 'Dashboard' },
     { path: '/admin/projects', icon: <FiFolder />, label: 'Projects' },
     { path: '/admin/blogs', icon: <FiFileText />, label: 'Blogs' },
+    { path: '/admin/messages', icon: <FiMail />, label: 'Messages', badge: unreadCount },
+    { path: '/admin/faqs', icon: <FiHelpCircle />, label: 'FAQs' }, // Add FAQ link
     { path: '/', icon: <FiHome />, label: 'View Site' },
   ];
 
@@ -49,6 +71,13 @@ const AdminSidebar = () => {
           >
             <div className="text-lg">{item.icon}</div>
             <span className="font-medium">{item.label}</span>
+            
+            {/* Badge for unread messages */}
+            {item.badge > 0 && (
+              <span className="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+                {item.badge}
+              </span>
+            )}
           </Link>
         ))}
       </div>

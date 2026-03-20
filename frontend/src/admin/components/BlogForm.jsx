@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiX } from 'react-icons/fi';
+import { FiX, FiVideo, FiImage } from 'react-icons/fi';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
 
@@ -8,14 +8,19 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
     title: '',
     content: '',
     excerpt: '',
-    coverImage: '',
     slug: '',
     tags: [],
     readTime: 5,
     published: true
   });
+  
+  const [coverImageFile, setCoverImageFile] = useState(null);
+  const [videoFile, setVideoFile] = useState(null);
+  const [coverImagePreview, setCoverImagePreview] = useState('');
+  const [videoPreview, setVideoPreview] = useState('');
   const [tagInput, setTagInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
     if (blog) {
@@ -23,12 +28,19 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
         title: blog.title,
         content: blog.content,
         excerpt: blog.excerpt,
-        coverImage: blog.coverImage,
         slug: blog.slug,
         tags: blog.tags || [],
         readTime: blog.readTime || 5,
         published: blog.published || true
       });
+      
+      if (blog.coverImage) {
+        setCoverImagePreview(blog.coverImage);
+      }
+      
+      if (blog.video) {
+        setVideoPreview(blog.video);
+      }
     }
   }, [blog]);
 
@@ -40,11 +52,59 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
     });
   };
 
+  const handleCoverImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error('Please select an image file');
+        return;
+      }
+      
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image size should be less than 5MB');
+        return;
+      }
+      
+      setCoverImageFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCoverImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('video/')) {
+        toast.error('Please select a video file');
+        return;
+      }
+      
+      // Validate file size (max 50MB)
+      if (file.size > 50 * 1024 * 1024) {
+        toast.error('Video size should be less than 50MB');
+        return;
+      }
+      
+      setVideoFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setVideoPreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const handleAddTag = () => {
-    if (tagInput.trim() && !formData.tags.includes(tagInput.trim())) {
+    if (tagInput.trim() && !formData.tags.includes(tagInput.trim().toLowerCase())) {
       setFormData({
         ...formData,
-        tags: [...formData.tags, tagInput.trim()]
+        tags: [...formData.tags, tagInput.trim().toLowerCase()]
       });
       setTagInput('');
     }
@@ -75,22 +135,63 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!coverImageFile && !blog?.coverImage) {
+      toast.error('Please select a cover image');
+      return;
+    }
+    
     setLoading(true);
+    setUploadProgress(0);
 
     try {
+      const formDataToSend = new FormData();
+      
+      // Append all form fields
+      Object.keys(formData).forEach(key => {
+        if (key === 'tags') {
+          formDataToSend.append(key, JSON.stringify(formData[key]));
+        } else {
+          formDataToSend.append(key, formData[key]);
+        }
+      });
+      
+      // Append files if selected
+      if (coverImageFile) {
+        formDataToSend.append('coverImage', coverImageFile);
+      }
+      
+      if (videoFile) {
+        formDataToSend.append('video', videoFile);
+      }
+
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          setUploadProgress(percentCompleted);
+        }
+      };
+
       if (blog) {
-        await api.put(`/blogs/${blog._id}`, formData);
+        await api.put(`/blogs/${blog._id}`, formDataToSend, config);
         toast.success('Blog updated successfully');
       } else {
-        await api.post('/blogs', formData);
+        await api.post('/blogs', formDataToSend, config);
         toast.success('Blog created successfully');
       }
+      
       onSuccess();
       onClose();
     } catch (error) {
       toast.error(error.response?.data?.message || 'Something went wrong');
+      console.error('Error:', error);
     } finally {
       setLoading(false);
+      setUploadProgress(0);
     }
   };
 
@@ -142,6 +243,72 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
             />
           </div>
 
+          {/* Cover Image Upload */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Cover Image *
+            </label>
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <div className="relative border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-4 text-center hover:border-blue-500 transition-colors">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleCoverImageChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <FiImage className="mx-auto h-8 w-8 text-gray-400" />
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Click to upload or drag and drop
+                  </p>
+                  <p className="text-xs text-gray-400">PNG, JPG, GIF up to 5MB</p>
+                </div>
+              </div>
+              {coverImagePreview && (
+                <div className="w-24 h-24 rounded-lg overflow-hidden">
+                  <img 
+                    src={coverImagePreview} 
+                    alt="Preview" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Video Upload */}
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              Video (Optional)
+            </label>
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <div className="relative border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-4 text-center hover:border-blue-500 transition-colors">
+                  <input
+                    type="file"
+                    accept="video/*"
+                    onChange={handleVideoChange}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                  />
+                  <FiVideo className="mx-auto h-8 w-8 text-gray-400" />
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Click to upload video (optional)
+                  </p>
+                  <p className="text-xs text-gray-400">MP4, WebM up to 50MB</p>
+                </div>
+              </div>
+              {videoPreview && (
+                <div className="w-24 h-24 rounded-lg overflow-hidden">
+                  <video 
+                    src={videoPreview} 
+                    className="w-full h-full object-cover"
+                    controls
+                  />
+                </div>
+              )}
+            </div>
+          </div>
+
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
               Excerpt *
@@ -173,21 +340,6 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                Cover Image URL *
-              </label>
-              <input
-                type="url"
-                name="coverImage"
-                value={formData.coverImage}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 bg-gray-50 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-colors"
-                placeholder="https://example.com/image.jpg"
-              />
-            </div>
-
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Read Time (minutes) *
@@ -259,6 +411,16 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
             </label>
           </div>
 
+          {/* Upload Progress */}
+          {uploadProgress > 0 && uploadProgress < 100 && (
+            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div 
+                className="bg-blue-600 h-2.5 rounded-full transition-all duration-300" 
+                style={{ width: `${uploadProgress}%` }}
+              />
+            </div>
+          )}
+
           <div className="flex justify-end gap-4 pt-6">
             <button
               type="button"
@@ -272,7 +434,7 @@ const BlogForm = ({ blog, onClose, onSuccess }) => {
               disabled={loading}
               className="px-6 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Saving...' : (blog ? 'Update Blog' : 'Create Blog')}
+              {loading ? `Uploading... ${uploadProgress}%` : (blog ? 'Update Blog' : 'Create Blog')}
             </button>
           </div>
         </form>

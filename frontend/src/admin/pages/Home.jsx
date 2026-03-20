@@ -1,15 +1,31 @@
-import React from 'react';
+import React, { useEffect } from 'react'; // Add useEffect import
 import { Helmet } from 'react-helmet-async';
 import Hero from '../components/home/Hero';
 import About from '../components/home/About';
 import Skills from '../components/home/Skills';
 import Timeline from '../components/home/Timeline';
+import api from '../services/api'; // Import api for tracking
 
 const Home = () => {
+  // Add profile view tracking
+  useEffect(() => {
+    const trackProfileView = async () => {
+      try {
+        await api.post('/views/profile');
+        console.log('✅ Profile view tracked');
+      } catch (error) {
+        // Silently fail - don't show errors to user
+        console.log('ℹ️ Profile view tracking skipped:', error.message);
+      }
+    };
+
+    trackProfileView();
+  }, []); // Empty array means it runs once when component mounts
+
   return (
     <>
       <Helmet>
-        <title>Surafel Ambire- Full Stack Developer | Portfolio</title>
+        <title>Surafel Ambire - Full Stack Developer | Portfolio</title>
         <meta 
           name="description" 
           content="Professional Full Stack Developer specializing in MERN stack, React, Node.js, and modern web development. View my projects and experience." 
@@ -28,4 +44,4 @@ const Home = () => {
   );
 };
 
-export default Home;  // Make sure this is default export
+export default Home;

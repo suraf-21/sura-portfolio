@@ -24,10 +24,8 @@ const ManageBlogs = () => {
       
       // Check if response has data array
       if (response.data && response.data.data) {
-        // Backend returns { success: true, data: [...] }
         setBlogs(response.data.data);
       } else if (Array.isArray(response.data)) {
-        // Backend returns array directly
         setBlogs(response.data);
       } else {
         console.error('Unexpected API response:', response.data);
@@ -117,6 +115,9 @@ const ManageBlogs = () => {
                         Read Time
                       </th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
+                        Media
+                      </th>
+                      <th className="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
                         Status
                       </th>
                       <th className="px-6 py-4 text-left text-xs font-medium text-gray-700 dark:text-gray-300 uppercase tracking-wider">
@@ -130,10 +131,20 @@ const ManageBlogs = () => {
                         <tr key={blog._id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                           <td className="px-6 py-4">
                             <div className="flex items-center">
-                              <div className="h-10 w-10 flex-shrink-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                                <span className="text-white font-bold text-sm">
-                                  {blog.title ? blog.title.charAt(0) : 'B'}
-                                </span>
+                              <div className="h-10 w-10 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+                                {blog.coverImage ? (
+                                  <img 
+                                    src={blog.coverImage} 
+                                    alt={blog.title}
+                                    className="h-full w-full object-cover"
+                                  />
+                                ) : (
+                                  <div className="h-full w-full flex items-center justify-center bg-gradient-to-r from-purple-500 to-pink-500">
+                                    <span className="text-white font-bold text-sm">
+                                      {blog.title ? blog.title.charAt(0) : 'B'}
+                                    </span>
+                                  </div>
+                                )}
                               </div>
                               <div className="ml-4">
                                 <div className="text-sm font-medium text-gray-900 dark:text-white">
@@ -166,6 +177,23 @@ const ManageBlogs = () => {
                             <span className="px-3 py-1 text-xs font-semibold rounded-full bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300">
                               {blog.readTime || 5} min
                             </span>
+                          </td>
+                          <td className="px-6 py-4">
+                            <div className="flex items-center gap-1">
+                              {blog.coverImage && (
+                                <span className="px-2 py-1 text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded" title="Has image">
+                                  🖼️
+                                </span>
+                              )}
+                              {blog.video && (
+                                <span className="px-2 py-1 text-xs bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded" title="Has video">
+                                  🎥
+                                </span>
+                              )}
+                              {!blog.coverImage && !blog.video && (
+                                <span className="text-xs text-gray-400">No media</span>
+                              )}
+                            </div>
                           </td>
                           <td className="px-6 py-4">
                             <span className={`px-3 py-1 text-xs font-semibold rounded-full ${
@@ -206,7 +234,7 @@ const ManageBlogs = () => {
                       ))
                     ) : (
                       <tr>
-                        <td colSpan="5" className="px-6 py-12 text-center">
+                        <td colSpan="6" className="px-6 py-12 text-center">
                           <div className="text-gray-500 dark:text-gray-400">
                             <div className="text-4xl mb-4">📝</div>
                             <p className="text-lg">No blog posts found</p>

@@ -9,15 +9,15 @@ const Contact = () => {
     {
       icon: <FiMail />,
       title: 'Email',
-      value: 'contact@surafeldev.com',
-      link: 'mailto:contact@devportfolio.com'
+      value: 'sura21dev@gmail.com',
+      link: 'mailto:sura21dev@gmail.com'
     },
-   {
-  icon: <FiPhone />,
-  title: 'Phone',
-  value: '+251 93 481 0156',   
-  link: 'tel:+251934810156'   
-},
+    {
+      icon: <FiPhone />,
+      title: 'Phone',
+      value: '+251 93 481 0156',   
+      link: 'tel:+251934810156'   
+    },
     {
       icon: <FiMapPin />,
       title: 'Location',
@@ -43,24 +43,38 @@ const Contact = () => {
         <meta name="keywords" content="contact developer, hire developer, project inquiry, web development" />
       </Helmet>
 
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-8">
-        <div className="container mx-auto px-4 py-12">
-          {/* Hero Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-12"
-          >
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-4">
-              Get in <span className="text-blue-600 dark:text-blue-400">Touch</span>
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Have a project in mind? Want to collaborate? Feel free to reach out. 
-              I'm always open to discussing new opportunities and ideas.
-            </p>
-          </motion.div>
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        {/* Hero Banner with Local Image */}
+        <div 
+          className="h-[40vh] min-h-[300px] bg-cover bg-center bg-no-repeat relative"
+          style={{ 
+            backgroundImage: `url('/contact-banner.jpg')`,
+          }}
+        >
+          {/* Dark Overlay for text readability */}
+          <div className="absolute inset-0 bg-black/50" />
+          
+          {/* Text Content */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center text-white px-4"
+            >
+              <h1 className="text-4xl md:text-6xl font-bold mb-4">
+                Get in <span className="text-blue-400">Touch</span>
+              </h1>
+              <p className="text-xl text-gray-200 max-w-2xl mx-auto">
+                Have a project in mind? Want to collaborate? Feel free to reach out. 
+                I'm always open to discussing new opportunities and ideas.
+              </p>
+            </motion.div>
+          </div>
+        </div>
 
+        {/* Main Content */}
+        <div className="container mx-auto px-4 py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Contact Information */}
             <motion.div

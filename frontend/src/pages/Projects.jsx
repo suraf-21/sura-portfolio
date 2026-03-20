@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom'; // Add Link import
 import ProjectCard from '../components/shared/ProjectCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import api from '../services/api';
@@ -11,13 +12,28 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState('all');
   
+  // Updated categories to match your new schema
   const categories = [
     { id: 'all', name: 'All Projects' },
-    { id: 'web', name: 'Web Development' },
-    { id: 'mobile', name: 'Mobile Apps' },
+    { id: 'frontend', name: 'Frontend' },
     { id: 'fullstack', name: 'Full Stack' },
+    { id: 'ai-powered', name: 'AI Powered' },
+    { id: 'automation', name: 'Automation / Agents' },
     { id: 'other', name: 'Other' }
   ];
+
+  // Helper function to get category icon (optional)
+  const getCategoryIcon = (categoryId) => {
+    const icons = {
+      'frontend': '🎨',
+      'fullstack': '⚡',
+      'ai-powered': '🤖',
+      'automation': '⚙️',
+      'other': '📦',
+      'all': '🔍'
+    };
+    return icons[categoryId] || '📁';
+  };
 
   useEffect(() => {
     fetchProjects();
@@ -70,15 +86,21 @@ const Projects = () => {
     }
   };
 
+  // Get category display name for empty state message
+  const getCategoryDisplayName = (categoryId) => {
+    const category = categories.find(c => c.id === categoryId);
+    return category ? category.name : categoryId;
+  };
+
   return (
     <>
       <Helmet>
         <title>Projects | Surafel Ambire - Full Stack Developer</title>
         <meta 
           name="description" 
-          content="Browse through my portfolio of web and mobile development projects built with modern technologies." 
+          content="Browse through my portfolio of web development, AI-powered applications, and automation projects built with modern technologies." 
         />
-        <meta name="keywords" content="React projects, Node.js projects, MERN projects, web development portfolio" />
+        <meta name="keywords" content="React projects, Node.js projects, AI projects, automation tools, full stack development portfolio" />
       </Helmet>
 
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 pt-8">
@@ -94,8 +116,8 @@ const Projects = () => {
               My <span className="text-blue-600 dark:text-blue-400">Projects</span>
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              A collection of my work showcasing expertise in full-stack development, 
-              modern frameworks, and clean design principles.
+              A collection of my work showcasing expertise in frontend development, full-stack applications,
+              AI-powered solutions, and automation tools.
             </p>
           </motion.div>
 
@@ -110,12 +132,13 @@ const Projects = () => {
               <button
                 key={cat.id}
                 onClick={() => setCategory(cat.id)}
-                className={`px-6 py-2 rounded-full text-sm font-medium transition-all ${
+                className={`px-6 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 ${
                   category === cat.id
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg scale-105'
                     : 'bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700'
                 }`}
               >
+                <span>{getCategoryIcon(cat.id)}</span>
                 {cat.name}
               </button>
             ))}
@@ -153,7 +176,7 @@ const Projects = () => {
               <p className="text-gray-600 dark:text-gray-400 mb-4">
                 {category === 'all' 
                   ? "No projects have been added yet. Check back soon!" 
-                  : `No projects found in the ${category} category. Try another category.`}
+                  : `No projects found in the ${getCategoryDisplayName(category)} category. Try another category.`}
               </p>
               {category !== 'all' && (
                 <button
@@ -163,6 +186,19 @@ const Projects = () => {
                   View All Projects
                 </button>
               )}
+            </motion.div>
+          )}
+
+          {/* Project Stats (Optional) */}
+          {!loading && projects.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="mt-12 text-center text-gray-600 dark:text-gray-400 text-sm"
+            >
+              Showing {filteredProjects.length} of {projects.length} projects
+              {category !== 'all' && ` in ${getCategoryDisplayName(category)}`}
             </motion.div>
           )}
         </div>

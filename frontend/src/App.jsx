@@ -9,10 +9,13 @@ import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/common/Navbar';
 import Footer from './components/common/Footer';
 
-// Pages
+// Public Pages
 import Home from './pages/Home';
 import Projects from './pages/Projects';
+import Project from './pages/Project'; // Import Project detail page
 import Blogs from './pages/Blogs';
+import Blog from './pages/Blog';
+import FAQPage from './pages/FAQPage';
 import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 
@@ -21,6 +24,8 @@ import Login from './admin/pages/Login';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import ManageProjects from './admin/pages/ManageProjects';
 import ManageBlogs from './admin/pages/ManageBlogs';
+import AdminMessages from './admin/pages/AdminMessages';
+import AdminFAQs from './admin/pages/AdminFAQs';
 import PrivateRoute from './admin/components/PrivateRoute';
 
 // Styles
@@ -48,19 +53,35 @@ function App() {
                       secondary: 'black',
                     },
                   },
+                  error: {
+                    duration: 4000,
+                    style: {
+                      background: '#ef4444',
+                      color: '#fff',
+                    },
+                  },
                 }}
               />
+              
+              {/* Navbar is shown on all pages except admin login */}
               <Navbar />
+              
               <main className="pt-16">
                 <Routes>
-                  {/* Public Routes */}
+                  {/* ===== PUBLIC ROUTES ===== */}
                   <Route path="/" element={<Home />} />
                   <Route path="/projects" element={<Projects />} />
+                  <Route path="/projects/:id" element={<Project />} /> {/* NEW: Project detail page */}
                   <Route path="/blogs" element={<Blogs />} />
+                  <Route path="/blogs/:slug" element={<Blog />} />
+                  <Route path="/faq" element={<FAQPage />} />
                   <Route path="/contact" element={<Contact />} />
 
-                  {/* Admin Routes */}
+                  {/* ===== ADMIN ROUTES ===== */}
+                  {/* Public Admin Route */}
                   <Route path="/admin/login" element={<Login />} />
+
+                  {/* Protected Admin Routes */}
                   <Route 
                     path="/admin/dashboard" 
                     element={
@@ -69,6 +90,7 @@ function App() {
                       </PrivateRoute>
                     } 
                   />
+                  
                   <Route 
                     path="/admin/projects" 
                     element={
@@ -77,6 +99,7 @@ function App() {
                       </PrivateRoute>
                     } 
                   />
+                  
                   <Route 
                     path="/admin/blogs" 
                     element={
@@ -85,11 +108,31 @@ function App() {
                       </PrivateRoute>
                     } 
                   />
+                  
+                  <Route 
+                    path="/admin/messages" 
+                    element={
+                      <PrivateRoute>
+                        <AdminMessages />
+                      </PrivateRoute>
+                    } 
+                  />
+                  
+                  <Route 
+                    path="/admin/faqs" 
+                    element={
+                      <PrivateRoute>
+                        <AdminFAQs />
+                      </PrivateRoute>
+                    } 
+                  />
 
-                  {/* 404 Route */}
+                  {/* ===== 404 ROUTE ===== */}
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </main>
+              
+              {/* Footer is shown on all pages except admin routes */}
               <Footer />
             </div>
           </Router>
