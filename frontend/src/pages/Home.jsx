@@ -2,7 +2,7 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { FiDownload, FiGithub, FiLinkedin, FiTwitter, FiArrowRight, FiCode, FiLayers, FiUsers, FiBriefcase, FiBook,  } from 'react-icons/fi';
+import { FiDownload, FiGithub, FiLinkedin, FiTwitter, FiArrowRight, FiCode, FiLayers, FiUsers, FiBriefcase, FiBook } from 'react-icons/fi';
 
 const Home = () => {
   // ========== HERO SECTION DATA ==========
@@ -35,6 +35,7 @@ const Home = () => {
   const skills = {
     technical: [
       { name: 'JavaScript', level: 95, icon: '🚀', category: 'frontend' },
+      { name: 'TypeScript', level: 88, icon: '📘', category: 'frontend' },
       { name: 'React', level: 90, icon: '⚛️', category: 'frontend' },
       { name: 'Node.js', level: 88, icon: '🟢', category: 'backend' },
       { name: 'MongoDB', level: 85, icon: '🍃', category: 'database' },
@@ -42,7 +43,7 @@ const Home = () => {
       { name: 'Tailwind CSS', level: 92, icon: '🎨', category: 'frontend' },
       { name: 'Git', level: 90, icon: '📌', category: 'tools' },
       { name: 'Docker', level: 80, icon: '🐳', category: 'devops' },
-      { name: 'Postman', level: 85, icon: '📬', category: 'tools' }, 
+      { name: 'Postman', level: 85, icon: '📬', category: 'tools' },
     ],
     soft: [
       { title: 'Problem Solving', description: 'Analytical thinking and creative solutions' },
@@ -56,16 +57,16 @@ const Home = () => {
   const experience = [
     {
       year: '2026 - Present',
-      title: ' Full Stack Developer',
+      title: 'Full Stack Developer',
       company: 'Freelance / SurafelDev',
-      description: 'Creating modern web applications with MERN stack technologies',
+      description: 'Creating modern web applications with MERN stack and TypeScript',
       type: 'experience'
     },
     {
-      year: ' 2025',
-      title: 'Backend Developer',
+      year: '2025',
+      title: 'Backend Developer Intern',
       company: 'Ethronics (AI & Robotics Company)',
-      description: 'Working on backend development, building APIs',
+      description: 'Internship experience in backend development, building APIs with Node.js and Express.js.',
       type: 'experience'
     },
     {
@@ -83,148 +84,149 @@ const Home = () => {
         <title>Surafel Ambire - Full Stack Developer | Portfolio</title>
         <meta 
           name="description" 
-          content="Professional Full Stack Developer specializing in MERN stack, React, Node.js, and modern web development. View my projects and experience." 
+          content="Professional Full Stack Developer specializing in MERN stack, TypeScript, React, Node.js, and modern web development. View my projects and experience." 
         />
-        <meta name="keywords" content="Full Stack Developer, MERN, React, Node.js, Portfolio" />
+        <meta name="keywords" content="Full Stack Developer, MERN, TypeScript, React, Node.js, Portfolio" />
         <meta property="og:title" content="Surafel Ambire - Full Stack Developer" />
         <meta property="og:description" content="Professional Full Stack Developer Portfolio" />
         <meta property="og:type" content="website" />
       </Helmet>
-{/* ========== HERO SECTION ========== */}
-<section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-  <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-gray-900 dark:to-gray-900" />
-  
-  <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
-  <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-  
-  <div className="container mx-auto px-4 py-20 relative z-10">
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-        className="space-y-8"
-      >
-        <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-tight">
-            Hi, I'm{' '}
-            <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              Surafel Ambire
-            </span>
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 font-medium">
-            Full-Stack Web Developer | MERN
-          </h2>
-          <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
-            I craft elegant digital experiences with modern technologies. 
-            Passionate about clean code, scalable architecture, and user-centric design.
-          </p>
-        </div>
 
-        <div className="flex flex-wrap gap-4">
-          <motion.a
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href="/surafel-cv.pdf"
-            download
-            className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
-          >
-            <FiDownload className="w-5 h-5" />
-            Download CV
-          </motion.a>
-          
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <Link
-              to="/projects"
-              className="inline-flex items-center px-8 py-3 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400 transition-colors font-medium"
+      {/* ========== HERO SECTION ========== */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/50 via-transparent to-purple-50/50 dark:from-gray-900 dark:to-gray-900" />
+        
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
+        
+        <div className="container mx-auto px-4 py-20 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="space-y-8"
             >
-              View Projects
-            </Link>
-          </motion.div>
-        </div>
+              <div className="space-y-4">
+                <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white leading-tight">
+                  Hi, I'm{' '}
+                  <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                    Surafel Ambire
+                  </span>
+                </h1>
+                <h2 className="text-2xl md:text-3xl text-gray-600 dark:text-gray-300 font-medium">
+                  Full-Stack Web Developer | MERN 
+                </h2>
+                <p className="text-lg text-gray-500 dark:text-gray-400 max-w-2xl">
+                  I craft elegant digital experiences with modern technologies including TypeScript, React, and Node.js.
+                  Passionate about type-safe code, scalable architecture, and user-centric design.
+                </p>
+              </div>
 
-        <div className="flex gap-4 pt-4">
-          {socialLinks.map((social) => (
-            <motion.a
-              key={social.label}
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.1, y: -5 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
-              aria-label={social.label}
+              <div className="flex flex-wrap gap-4">
+                <motion.a
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  href="/surafel-cv.pdf"
+                  download
+                  className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+                >
+                  <FiDownload className="w-5 h-5" />
+                  Download CV
+                </motion.a>
+                
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Link
+                    to="/projects"
+                    className="inline-flex items-center px-8 py-3 border-2 border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:border-blue-600 hover:text-blue-600 dark:hover:border-blue-400 dark:hover:text-blue-400 transition-colors font-medium"
+                  >
+                    View Projects
+                  </Link>
+                </motion.div>
+              </div>
+
+              <div className="flex gap-4 pt-4">
+                {socialLinks.map((social) => (
+                  <motion.a
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.1, y: -5 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="p-3 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-all"
+                    aria-label={social.label}
+                  >
+                    {social.icon}
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+            
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="relative"
             >
-              {social.icon}
-            </motion.a>
-          ))}
-        </div>
-      </motion.div>
-      
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-        className="relative"
-      >
-        <div className="relative mx-auto w-80 h-80 md:w-96 md:h-96">
-          {/* Outer glow effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl backdrop-blur-lg border border-white/20 shadow-2xl" />
-          
-          {/* Main profile container */}
-          <div className="absolute inset-4 md:inset-6 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
-            {/* Profile image that fills the entire container */}
-            <img 
-              src="/profile.png" 
-              alt="Surafel Ambire - Full-Stack Developer" 
-              className="w-full h-full object-cover"
-            />
+              <div className="relative mx-auto w-80 h-80 md:w-96 md:h-96">
+                {/* Outer glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-3xl backdrop-blur-lg border border-white/20 shadow-2xl" />
+                
+                {/* Main profile container */}
+                <div className="absolute inset-4 md:inset-6 rounded-2xl bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 overflow-hidden">
+                  {/* Profile image that fills the entire container */}
+                  <img 
+                    src="/profile.png" 
+                    alt="Surafel Ambire - Full-Stack Developer" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* Floating Tech Badges - MERN Stack at 4 Corners */}
+                {/* Top Left: React */}
+                <motion.div
+                  animate={{ y: [0, -8, 0], x: [0, -8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity }}
+                  className="absolute -top-4 -left-4 w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
+                >
+                  <span className="text-white font-bold text-xs">React</span>
+                </motion.div>
+                
+                {/* Top Right: Express */}
+                <motion.div
+                  animate={{ y: [0, -8, 0], x: [0, 8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 0.3 }}
+                  className="absolute -top-4 -right-4 w-14 h-14 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
+                >
+                  <span className="text-white font-bold text-xs">Express</span>
+                </motion.div>
+                
+                {/* Bottom Left: Node.js */}
+                <motion.div
+                  animate={{ y: [0, 8, 0], x: [0, -8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 0.6 }}
+                  className="absolute -bottom-4 -left-4 w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
+                >
+                  <span className="text-white font-bold text-xs">Node</span>
+                </motion.div>
+                
+                {/* Bottom Right: MongoDB */}
+                <motion.div
+                  animate={{ y: [0, 8, 0], x: [0, 8, 0] }}
+                  transition={{ duration: 3, repeat: Infinity, delay: 0.9 }}
+                  className="absolute -bottom-4 -right-4 w-14 h-14 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
+                >
+                  <span className="text-white font-bold text-xs">MongoDB</span>
+                </motion.div>
+              </div>
+            </motion.div>
           </div>
-
-          {/* Floating Tech Badges - Complete MERN Stack */}
-          {/* Top Left: React */}
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 3, repeat: Infinity }}
-            className="absolute -top-3 -left-3 w-14 h-14 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
-          >
-            <span className="text-white font-bold text-xs">React</span>
-          </motion.div>
-          
-          {/* Top Right: Express */}
-          <motion.div
-            animate={{ y: [0, -15, 0] }}
-            transition={{ duration: 3, repeat: Infinity, delay: 0.5 }}
-            className="absolute -top-3 -right-3 w-14 h-14 bg-gradient-to-r from-gray-600 to-gray-800 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
-          >
-            <span className="text-white font-bold text-xs">Express</span>
-          </motion.div>
-          
-          {/* Bottom Left: Node.js */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 3, repeat: Infinity, delay: 0.8 }}
-            className="absolute -bottom-3 -left-3 w-14 h-14 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
-          >
-            <span className="text-white font-bold text-xs">Node</span>
-          </motion.div>
-          
-          {/* Bottom Right: MongoDB */}
-          <motion.div
-            animate={{ y: [0, 15, 0] }}
-            transition={{ duration: 3, repeat: Infinity, delay: 1.1 }}
-            className="absolute -bottom-3 -right-3 w-14 h-14 bg-gradient-to-r from-green-600 to-green-700 rounded-full flex items-center justify-center shadow-lg border-2 border-white/30 z-10"
-          >
-            <span className="text-white font-bold text-xs">MongoDB</span>
-          </motion.div>
         </div>
-      </motion.div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* ========== ABOUT SECTION ========== */}
       <section id="about" className="py-20 bg-white dark:bg-gray-900">
@@ -247,11 +249,11 @@ const Home = () => {
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
                 I'm a passionate Full Stack Developer with 2+ years of experience building 
                 web applications that solve real-world problems. My expertise lies in the 
-                MERN stack, but I'm always excited to learn new technologies and frameworks.
+                MERN stack with TypeScript, but I'm always excited to learn new technologies and frameworks.
               </p>
               
               <p className="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                I believe in writing clean, maintainable code and creating intuitive user 
+                I believe in writing clean, type-safe, maintainable code and creating intuitive user 
                 experiences. When I'm not coding, you can find me contributing to open-source 
                 projects, writing technical blogs, or exploring new tech trends.
               </p>

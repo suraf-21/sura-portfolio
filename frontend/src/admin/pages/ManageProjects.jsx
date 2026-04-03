@@ -18,8 +18,8 @@ const ManageProjects = () => {
     const categoryMap = {
       'frontend': 'Frontend',
       'fullstack': 'Full Stack',
-      'ai-powered': 'AI Powered',
-      'automation': 'Automation / Agents',
+      'ai-powered': 'AI Agents',
+      'automation': 'Desktop App',
       'other': 'Other'
     };
     return categoryMap[category] || category || 'frontend';

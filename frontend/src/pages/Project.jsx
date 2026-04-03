@@ -67,8 +67,8 @@ const Project = () => {
     const labels = {
       'frontend': 'Frontend',
       'fullstack': 'Full Stack',
-      'ai-powered': 'AI Powered',
-      'automation': 'Automation',
+      'ai-powered': 'AI Agents',
+      'automation': 'Desktop App',
       'other': 'Other'
     };
     return labels[category] || category;

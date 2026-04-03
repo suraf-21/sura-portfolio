@@ -226,8 +226,8 @@ const ProjectForm = ({ project, onClose, onSuccess }) => {
               >
                 <option value="frontend">Frontend</option>
                 <option value="fullstack">Full Stack</option>
-                <option value="ai-powered">AI Powered</option>
-                <option value="automation">Automation / Agents</option>
+                <option value="ai-powered">AI Agents</option>
+                <option value="automation">Desktop App</option>
                 <option value="other">Other</option>
               </select>
             </div>

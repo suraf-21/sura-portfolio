@@ -17,8 +17,8 @@ const Projects = () => {
     { id: 'all', name: 'All Projects' },
     { id: 'frontend', name: 'Frontend' },
     { id: 'fullstack', name: 'Full Stack' },
-    { id: 'ai-powered', name: 'AI Powered' },
-    { id: 'automation', name: 'Automation / Agents' },
+    { id: 'ai-powered', name: 'AI Agents' },
+    { id: 'automation', name: 'Desktop App' },
     { id: 'other', name: 'Other' }
   ];
 
@@ -28,7 +28,7 @@ const Projects = () => {
       'frontend': '🎨',
       'fullstack': '⚡',
       'ai-powered': '🤖',
-      'automation': '⚙️',
+      'automation': '💻',
       'other': '📦',
       'all': '🔍'
     };
@@ -117,7 +117,7 @@ const Projects = () => {
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               A collection of my work showcasing expertise in frontend development, full-stack applications,
-              AI-powered solutions, and automation tools.
+              AI-powered solutions, and desktop applications.
             </p>
           </motion.div>
 
